@@ -37,7 +37,7 @@
 ;;;             Integer (Between 0 and 26 inclusive)
 ;;;             Symbol ('encrypt or 'decrypt)
 
-(define (caeser-cipher password k method)
+(define (caesar-cipher password k method)
   (list->string
    (map chr 
         (map (lambda(ascii) (shift ascii k method))
