@@ -32,7 +32,7 @@
       (error "Value of K is not between 0 and 26 (inclusive)")))
   
   
-;;; Caeser-Cipher
+;;; Caesar-Cipher
 ;;; Parameters: String
 ;;;             Integer (Between 0 and 26 inclusive)
 ;;;             Symbol ('encrypt or 'decrypt)
