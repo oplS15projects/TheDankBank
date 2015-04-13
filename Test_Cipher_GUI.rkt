@@ -1,6 +1,6 @@
 #lang racket
 
-(require "Caesar_Cipher.rkt"
+(require "Ciphers.rkt"
          racket/gui)
 
 (define window (new frame% [label "Cipher Test"]
