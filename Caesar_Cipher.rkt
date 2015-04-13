@@ -42,3 +42,5 @@
    (map chr 
         (map (lambda(ascii) (shift ascii k method))
              (map ord (string->list password))))))
+
+(provide caesar-cipher)
