@@ -6,14 +6,31 @@
 (define (chr num)
   (integer->char num))
 
+(define (cycle in len)
+  (define lst (cond ((list? in) in)
+                    ((string? in) (string->list in))
+                    ((symbol? in) (string->list (symbol->string in)))))
+  (define (cyc dst src)
+    (cond ((= len (length dst)) dst) 
+          ((null? src) (cyc dst lst))
+          (else (cyc (cons (car src) dst) (cdr src)))))
+  (reverse (cyc null lst)))
+
+(define (gen-v-key password-len key)
+  (map (lambda (x) (if (> x 96) 
+                       (- x 96)
+                       (- x 64)))
+       (map ord (cycle key password-len))))
+
 ;;; shift
 ;;; Parameters: Integer num: number to be shifted. should be the ascii value of a letter character.
 ;;;             Integer k: the shift value (Between 0 and 26 inclusive)
 ;;;             Symbol ('encrypt or 'decrypt)
 
 (define (shift num k method)
+  (define comparator (if (eq? 'encrypt method) > <))
   (define (transform upper-bound combiner combiner-inverse)
-    (if (> (combiner num k) upper-bound)
+    (if (comparator (combiner num k) upper-bound)
         (combiner-inverse (combiner num k) 26)
         (combiner num k)))
   (define (transform-encrypt upper-bound)
@@ -43,6 +60,12 @@
             (else (error "Unknown Method: Try 'encrypt or 'decrypt")))
       (error "Value of K is not between 0 and 26 (inclusive)")))
   
+
+(define (vigenere-cipher password keyword method)
+  (define (folder-proc a b result)
+    (cons (shift a b method) result))
+  (define keylist (gen-v-key (string-length password) keyword))
+  (list->string (map chr (foldr folder-proc '() (map ord (string->list password)) keylist))))
   
 ;;; Caesar-Cipher
 ;;; Parameters: String
