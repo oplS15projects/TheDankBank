@@ -30,7 +30,7 @@
 (define button-caesar (new button% [label "Use Caesar Cipher!"]
                                    [parent panel-caesar]
                                    [callback (lambda (b e) (send message
-                                                                 set-label
+                                                                 set-value
                                                                  (caesar-cipher (send text get-value)
                                                                                 (string->number (send text-caesar get-value))
                                                                                 (decrypt?))))]))
@@ -46,16 +46,15 @@
 (define button-vigenere (new button% [label "Use Vigenere Cipher!"]
                                      [parent panel-vigenere]
                                      [callback (lambda (b e) (send message
-                                                                 set-label
+                                                                 set-value
                                                                  (vigenere-cipher (send text get-value)
-                                                                                (send text-vigenere get-value)
-                                                                                (decrypt?))))]))
+                                                                                  (send text-vigenere get-value)
+                                                                                  (decrypt?))))]))
 
 #|Output|#
 (new message% [label "===OUTPUT==="] [parent window])
-(define message (new message% [label "Output Here"]
-                              [parent window]
-                              [auto-resize #t]))
+(define message (new text-field% [label "Output:"]
+                                 [parent window]))
 
 
 #|SHOW WINDOW|#
