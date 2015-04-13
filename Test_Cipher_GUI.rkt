@@ -36,6 +36,20 @@
                                                                                 (decrypt?))))]))
 
 #|Vigenere Cipher|#
+(define panel-vigenere (new horizontal-panel% [parent window]))
+
+(define text-vigenere (new text-field% [label "Vigenere keyword:"]
+                                       [parent panel-vigenere]
+                                       [min-width 2]
+                                       [stretchable-width #f]))
+
+(define button-vigenere (new button% [label "Use Vigenere Cipher!"]
+                                     [parent panel-vigenere]
+                                     [callback (lambda (b e) (send message
+                                                                 set-label
+                                                                 (vigenere-cipher (send text get-value)
+                                                                                (send text-vigenere get-value)
+                                                                                (decrypt?))))]))
 
 #|Output|#
 (new message% [label "===OUTPUT==="] [parent window])
