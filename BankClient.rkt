@@ -1,11 +1,15 @@
 #lang racket
 
 (require "Ciphers.rkt"
+         "BankAccountClass.rkt"
          racket/gui)
 
 (define window (new frame% [label "The Dank Bank (Dank Memes since 1993)"]
                            [width  600]
                            [height 200]))
+
+; local variable for active account
+(define active-account '())
 
 #|Login and Password|#
 (define login-panel (new vertical-panel% [parent window]
@@ -27,7 +31,8 @@
 (define login-button (new button% [label "Login"]
                                   [parent button-panel]
                                   [callback (lambda (b e)
-                                              #|TODO: Login|# null)]))
+                                              (set! active-account (login-account (send username-text get-value)
+                                                                                  (send password-text get-value))))]))
 (define clear-button (new button% [label "Clear"]
                                   [parent button-panel]
                                   [callback (lambda (b e)
@@ -36,7 +41,8 @@
 (define create-button (new button% [label "Create Account"]
                                    [parent button-panel]
                                    [callback (lambda (b e)
-                                               #|TODO: Account making process|# null)]))
+                                               (create-account (send username-text get-value)
+                                                               (send password-text get-value)))]))
 
 #|Output|#
 (define output-panel (new vertical-panel% [parent window]
