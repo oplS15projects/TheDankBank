@@ -61,17 +61,22 @@
                                      [parent balance-panel]))
 (define withdraw-button (new button% [label "Withdraw"]
                                      [parent balance-panel]
-                                     [callback (lambda (b e) null)]))
+                                     [callback (lambda (b e)
+                                                 (begin #|TODO: set-label balance-message to balance|#
+                                                        #|TODO: add to balance|#null))]))
 (define deposit-button (new button% [label "Deposit"]
                                     [parent balance-panel]
-                                    [callback (lambda (b e) null)]))
+                                    [callback (lambda (b e)
+                                                (begin #|TODO: set-label balance-message to balance|#
+                                                       #|TODO: take from balance|#null))]))
 (define logout-button (new button% [label "Logout"]
                                    [parent balance-panel]
                                    [callback (lambda (b e)
                                                (begin (send balance-panel enable #f)
                                                       (send balance-message set-label "Balance")
                                                       (send login-panel enable #t)
-                                                      (send button-panel enable #t)))]))
+                                                      (send button-panel enable #t)
+                                                      (send amount-text set-value "")))]))
 
 #|SHOW WINDOW|#
 (send window show #t)
