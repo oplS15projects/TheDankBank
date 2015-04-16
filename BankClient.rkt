@@ -31,8 +31,11 @@
 (define login-button (new button% [label "Login"]
                                   [parent button-panel]
                                   [callback (lambda (b e)
-                                              (set! active-account (login-account (send username-text get-value)
-                                                                                  (send password-text get-value))))]))
+                                              (begin (set! active-account (login-account (send username-text get-value)
+                                                                                         (send password-text get-value)))
+                                                     (send login-panel enable #f)
+                                                     (send button-panel enable #f)
+                                                     (send balance-panel enable #t)))]))
 (define clear-button (new button% [label "Clear"]
                                   [parent button-panel]
                                   [callback (lambda (b e)
@@ -50,6 +53,25 @@
 
 (define balance-message (new message% [label "Balance"]
                                       [parent output-panel]))
+
+(define balance-panel (new horizontal-panel% [parent output-panel]
+                                             [alignment '(center top)]
+                                             [enabled #f]))
+(define amount-text (new text-field% [label "Amount:"]
+                                     [parent balance-panel]))
+(define withdraw-button (new button% [label "Withdraw"]
+                                     [parent balance-panel]
+                                     [callback (lambda (b e) null)]))
+(define deposit-button (new button% [label "Deposit"]
+                                    [parent balance-panel]
+                                    [callback (lambda (b e) null)]))
+(define logout-button (new button% [label "Logout"]
+                                   [parent balance-panel]
+                                   [callback (lambda (b e)
+                                               (begin (send balance-panel enable #f)
+                                                      (send balance-message set-label "Balance")
+                                                      (send login-panel enable #t)
+                                                      (send button-panel enable #t)))]))
 
 #|SHOW WINDOW|#
 (send window show #t)
