@@ -8,11 +8,18 @@
 ; Database of all of the bank accounts
 (define database nil)
 
+; Called from Deposit button
+(define (deposit-account account amount)
+  ((account 'deposit) (string->number amount))) 
+
+(define (withdraw-account account amount)
+  ((account 'withdraw) (string->number amount)))
+
 ; Called from Login button
 ; Returns the account if the username and password match
 ; Prints an error otherwise.
 (define (login-account username password)
-  (let ((acc (filter (lambda(x) (x 'get-username)) database)))
+  (let ((acc (filter (lambda(x) (equal? (x 'get-username) username)) database)))
     (if (not (equal? acc nil))
         (if (equal? ((car acc) 'get-password) password)
             (car acc)
@@ -37,7 +44,7 @@
     (if (>= balance amount)
         (begin (set! balance (- balance amount))
                balance)
-        "Insufficient funds"))
+        (error "Insufficient funds")))
   (define (deposit amount)
     (set! balance (+ balance amount))
     balance)
@@ -45,6 +52,7 @@
   (define (dispatch m)
     (cond ((eq? m 'get-username) username)
           ((eq? m 'get-password) password)
+          ((eq? m 'get-balance) balance)
           ((eq? m 'withdraw) withdraw)
           ((eq? m 'deposit) deposit)
           (else (error "Unknown request -- MAKE-ACCOUNT"

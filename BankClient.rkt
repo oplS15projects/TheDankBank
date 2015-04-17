@@ -9,7 +9,7 @@
                            [height 200]))
 
 ; local variable for active account
-(define active-account '())
+(define active-account nil)
 
 #|Login and Password|#
 (define login-panel (new vertical-panel% [parent window]
@@ -62,13 +62,13 @@
 (define withdraw-button (new button% [label "Withdraw"]
                                      [parent balance-panel]
                                      [callback (lambda (b e)
-                                                 (begin #|TODO: set-label balance-message to balance|#
-                                                        #|TODO: add to balance|#null))]))
+                                                 (begin (withdraw-account active-account (send amount-text get-value))
+                                                   #|TODO: set-label balance-message to balance|# ))]))
 (define deposit-button (new button% [label "Deposit"]
                                     [parent balance-panel]
                                     [callback (lambda (b e)
-                                                (begin #|TODO: set-label balance-message to balance|#
-                                                       #|TODO: take from balance|#null))]))
+                                                (begin (deposit-account active-account (send amount-text get-value))
+                                                  #|TODO: set-label balance-message to balance|# ))]))
 (define logout-button (new button% [label "Logout"]
                                    [parent balance-panel]
                                    [callback (lambda (b e)
@@ -76,7 +76,8 @@
                                                       (send balance-message set-label "Balance")
                                                       (send login-panel enable #t)
                                                       (send button-panel enable #t)
-                                                      (send amount-text set-value "")))]))
+                                                      (send amount-text set-value "")
+                                                      (set! active-account nil)))]))
 
 #|SHOW WINDOW|#
 (send window show #t)
