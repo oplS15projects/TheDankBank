@@ -35,7 +35,8 @@
                                                                                          (send password-text get-value)))
                                                      (send login-panel enable #f)
                                                      (send button-panel enable #f)
-                                                     (send balance-panel enable #t)))]))
+                                                     (send balance-panel enable #t)
+                                                     (update-balance)))]))
 (define clear-button (new button% [label "Clear"]
                                   [parent button-panel]
                                   [callback (lambda (b e)
@@ -53,6 +54,9 @@
 
 (define balance-message (new message% [label "Balance"]
                                       [parent output-panel]))
+(define (update-balance)
+  (send balance-message set-label (string-append "λ " (number->string (active-account 'get-balance)))))
+
 
 (define balance-panel (new horizontal-panel% [parent output-panel]
                                              [alignment '(center top)]
@@ -63,12 +67,12 @@
                                      [parent balance-panel]
                                      [callback (lambda (b e)
                                                  (begin (withdraw-account active-account (send amount-text get-value))
-                                                   #|TODO: set-label balance-message to balance|# ))]))
+                                                        (update-balance)))]))
 (define deposit-button (new button% [label "Deposit"]
                                     [parent balance-panel]
                                     [callback (lambda (b e)
                                                 (begin (deposit-account active-account (send amount-text get-value))
-                                                  #|TODO: set-label balance-message to balance|# ))]))
+                                                       (update-balance)))]))
 (define logout-button (new button% [label "Logout"]
                                    [parent balance-panel]
                                    [callback (lambda (b e)
