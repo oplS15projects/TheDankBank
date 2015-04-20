@@ -83,5 +83,12 @@
                                                       (send amount-text set-value "")
                                                       (set! active-account nil)))]))
 
+(define cipher-panel (new vertical-panel% [parent balance-panel]))
+(define cipher-choice (new choice% [label "Type of Cipher"]
+                                   [parent cipher-panel]
+                                   [choices (list "Caesar" "Vignere")]))
+(define cipher-text (new text-field% [label "Cipher Data"]
+                                     [parent cipher-panel]))
+
 #|SHOW WINDOW|#
 (send window show #t)
