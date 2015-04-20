@@ -24,6 +24,13 @@
                                        [horiz-margin 20]
                                        [stretchable-width #t]))
 
+(define cipher-panel (new vertical-panel% [parent login-panel]))
+(define cipher-choice (new choice% [label "Type of Cipher"]
+                                   [parent cipher-panel]
+                                   [choices (list "Caesar" "Vignere")]))
+(define cipher-text (new text-field% [label "Cipher Data"]
+                                     [parent cipher-panel]))
+
 #|Button Use|#
 (define button-panel (new horizontal-panel% [parent window]
                                             [alignment '(center top)]))
@@ -82,13 +89,6 @@
                                                       (send button-panel enable #t)
                                                       (send amount-text set-value "")
                                                       (set! active-account nil)))]))
-
-(define cipher-panel (new vertical-panel% [parent balance-panel]))
-(define cipher-choice (new choice% [label "Type of Cipher"]
-                                   [parent cipher-panel]
-                                   [choices (list "Caesar" "Vignere")]))
-(define cipher-text (new text-field% [label "Cipher Data"]
-                                     [parent cipher-panel]))
 
 #|SHOW WINDOW|#
 (send window show #t)
