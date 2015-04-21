@@ -59,4 +59,6 @@
                        m))))
     dispatch)
 
+(set! database (append database (list (make-account "fredm" "ilovescheme" 99999))))
+
 (provide (all-defined-out))
