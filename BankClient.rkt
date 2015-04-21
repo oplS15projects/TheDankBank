@@ -24,13 +24,6 @@
                                        [horiz-margin 20]
                                        [stretchable-width #t]))
 
-(define cipher-panel (new vertical-panel% [parent login-panel]))
-(define cipher-choice (new choice% [label "Type of Cipher"]
-                                   [parent cipher-panel]
-                                   [choices (list "Caesar" "Vignere")]))
-(define cipher-text (new text-field% [label "Cipher Data"]
-                                     [parent cipher-panel]))
-
 #|Button Use|#
 (define button-panel (new horizontal-panel% [parent window]
                                             [alignment '(center top)]))
@@ -52,8 +45,7 @@
 (define create-button (new button% [label "Create Account"]
                                    [parent button-panel]
                                    [callback (lambda (b e)
-                                               (create-account (send username-text get-value)
-                                                               (send password-text get-value)))]))
+                                               (make-new-account))]))
 
 #|Output|#
 (define output-panel (new vertical-panel% [parent window]
@@ -89,6 +81,28 @@
                                                       (send button-panel enable #t)
                                                       (send amount-text set-value "")
                                                       (set! active-account nil)))]))
+
+#|Pop-up for Account Creation|#
+(define (make-new-account)
+  (let* ((new-account-panel (new frame% [label "Welcome!"]
+                                        [width 220]
+                                        [height 180]))
+         (username-text (new text-field% [label "Username:"]
+                                         [parent new-account-panel]))
+         (password-text (new text-field% [label "Password:"]
+                                         [parent new-account-panel]))
+         (cipher-choice (new choice% [label "Type of Cipher"]
+                                     [parent new-account-panel]
+                                     [choices (list "Caesar" "Vignere")]))
+         (cipher-text (new text-field% [label "Cipher Data"]
+                                       [parent new-account-panel]))
+         (make-button (new button% [label "Make my account!"]
+                                   [parent new-account-panel]
+                                   [callback (lambda (b e)
+                                               (begin (create-account (send username-text get-value)
+                                                                      (send password-text get-value))
+                                                      (send new-account-panel show #f)))])))
+    (send new-account-panel show #t)))
 
 #|SHOW WINDOW|#
 (send window show #t)
