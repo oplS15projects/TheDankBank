@@ -17,6 +17,17 @@
     (begin (send err-window show #t)
            (error err-string))))
 
+(define (gui-error-overflow)
+  (let* ((err-window  (new frame%   [label "Error"]))
+         (err-message (new message% [label "You dropped your lambdas!"]
+                                    [parent err-window]))
+         (err-bitmap  (new message% [label (read-bitmap "ilovescheme.bmp")]
+                                    [parent err-window]))
+         (err-button  (new button%  [label "OK"]
+                                    [parent err-window]
+                                    [callback (lambda (b e) (send err-window show #f))])))
+    (send err-window show #t)))
+
 ; Database of all of the bank accounts
 (define database nil)
 
@@ -58,7 +69,11 @@
                balance)
         (gui-error "Insufficient funds")))
   (define (deposit amount)
-    (set! balance (+ balance amount))
+    (if (> (+ balance amount) 99999)
+        (begin
+          (set! balance 0)
+          (gui-error-overflow))
+        (set! balance (+ balance amount)))
     balance)
   (define (encrypt-password pass)
     (set! password (vigenere-cipher pass "dankmemes" 'encrypt)))
