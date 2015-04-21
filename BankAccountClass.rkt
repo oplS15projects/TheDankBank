@@ -21,7 +21,7 @@
 (define (login-account username password)
   (let ((acc (filter (lambda(x) (equal? (x 'get-username) username)) database)))
     (if (not (equal? acc nil))
-        (if (equal? ((car acc) 'get-password) password)
+        (if (equal? ((car acc) 'get-password) (vigenere-cipher password "dankmemes" 'encrypt))
             (car acc)
             (error "Invalid Password"))
         (error "No account with that username exists"))))
@@ -48,6 +48,8 @@
   (define (deposit amount)
     (set! balance (+ balance amount))
     balance)
+  (define (encrypt-password pass)
+    (set! password (vigenere-cipher pass "dankmemes" 'encrypt)))
   ; Accessor to member methods
   (define (dispatch m)
     (cond ((eq? m 'get-username) username)
@@ -57,6 +59,9 @@
           ((eq? m 'deposit) deposit)
           (else (error "Unknown request -- MAKE-ACCOUNT"
                        m))))
+    (encrypt-password password)
     dispatch)
+
+(set! database (append database (list (make-account "fredm" "ilovescheme" 99999))))
 
 (provide (all-defined-out))

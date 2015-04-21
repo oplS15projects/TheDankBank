@@ -1,11 +1,13 @@
 #lang racket
 
+; So I can type less
 (define (ord char)
   (char->integer char))
 
 (define (chr num)
   (integer->char num))
 
+; Methods for the Vigenere Cipher
 (define (cycle in len)
   (define lst (cond ((list? in) in)
                     ((string? in) (string->list in))
@@ -28,34 +30,26 @@
 ;;;             Symbol ('encrypt or 'decrypt)
 
 (define (shift num k method)
-  (define comparator (if (eq? 'encrypt method) > <))
-  (define (transform upper-bound combiner combiner-inverse)
-    (if (comparator (combiner num k) upper-bound)
-        (combiner-inverse (combiner num k) 26)
-        (combiner num k)))
-  (define (transform-encrypt upper-bound)
-    (transform upper-bound + -))
-  (define (transform-decrypt upper-bound)
-    (transform upper-bound - +))
-  ;; assert 0 <= k <= 26
   (if (and (<= k 26) (>= k 0))
-      ;; encryption cases
       (cond ((eq? method 'encrypt)
-             ;; case for uppercase ascii letters
              (cond ((and (>= num 65) (<= num 90))
-                    (transform-encrypt 90))
-                   ;;case for lowercase ascii letters
+                    (if (> (+ num k) 90)
+                        (- (+ num k) 26)
+                        (+ num k)))
                    ((and (>= num 97) (<= num 122))
-                    (transform-encrypt 122))
+                    (if (> (+ num k) 122)
+                        (- (+ num k) 26)
+                        (+ num k)))
                    (else num)))
-            ;; decryption cases
             ((eq? method 'decrypt)
-             ;; case for uppercase ascii letters
              (cond ((and (>= num 65) (<= num 90))
-                    (transform-decrypt 65))
-                   ;;case for lowercase ascii letters
+                    (if (< (- num k) 65)
+                        (+ (- num k) 26)
+                        (- num k)))
                    ((and (>= num 97) (<= num 122))
-                    (transform-decrypt 97))
+                    (if (< (- num k) 97)
+                        (+ (- num k) 26)
+                        (- num k)))
                    (else num)))
             (else (error "Unknown Method: Try 'encrypt or 'decrypt")))
       (error "Value of K is not between 0 and 26 (inclusive)")))
