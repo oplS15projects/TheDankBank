@@ -12,5 +12,5 @@ Front-end/GUI and mainline code for banking client.
 #### Ciphers.rkt
 Encryption engine.
 
-#### Test_Cipher_GUI.rkt
+#### TestCipherGUI.rkt
 Test GUI for encryption engine. For Milestone 1.
