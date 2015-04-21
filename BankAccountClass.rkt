@@ -1,9 +1,21 @@
 #lang racket
 
-(require "Ciphers.rkt")
+(require "Ciphers.rkt"
+         racket/gui)
 
 ; Definition for nil because fuck you
 (define nil '())
+
+;GUI Error printing
+(define (gui-error err-string)
+  (let* ((err-window  (new frame%   [label "Error"]))
+         (err-message (new message% [label err-string]
+                                    [parent err-window]))
+         (err-button  (new button%  [label "OK"]
+                                    [parent err-window]
+                                    [callback (lambda (b e) (send err-window show #f))])))
+    (begin (send err-window show #t)
+           (error err-string))))
 
 ; Database of all of the bank accounts
 (define database nil)
@@ -23,8 +35,8 @@
     (if (not (equal? acc nil))
         (if (equal? ((car acc) 'get-password) (vigenere-cipher password "dankmemes" 'encrypt))
             (car acc)
-            (error "Invalid Password"))
-        (error "No account with that username exists"))))
+            (gui-error "Invalid Password"))
+        (gui-error "No account with that username exists"))))
 
 ; Called from Create-Account button.
 ; Calls make-account and adds the return
@@ -35,7 +47,7 @@
     (equal? (acc 'get-username) username))
   (if (equal? (filter equal-username? database) nil)
       (set! database (append database (list (make-account username password 0))))
-      (error "An account with that name already exists")))
+      (gui-error "An account with that name already exists")))
 
 ; Constructor for the object
 (define (make-account username password balance)
@@ -44,7 +56,7 @@
     (if (>= balance amount)
         (begin (set! balance (- balance amount))
                balance)
-        (error "Insufficient funds")))
+        (gui-error "Insufficient funds")))
   (define (deposit amount)
     (set! balance (+ balance amount))
     balance)
@@ -57,7 +69,7 @@
           ((eq? m 'get-balance) balance)
           ((eq? m 'withdraw) withdraw)
           ((eq? m 'deposit) deposit)
-          (else (error "Unknown request -- MAKE-ACCOUNT"
+          (else (gui-error "Unknown request -- MAKE-ACCOUNT"
                        m))))
     (encrypt-password password)
     dispatch)
