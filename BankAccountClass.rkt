@@ -102,15 +102,15 @@
           "Input Read"
           (cond ((= n 0) (begin
                            (set! name line)
-                           (helper (read-line input-file) 1)))
+                           (helper (read-line input-file (or 'linefeed 'return)) 1)))
                 ((= n 1) (begin
                            (set! password line)
-                           (helper (read-line input-file) 2)))
+                           (helper (read-line input-file (or 'linefeed 'return)) 2)))
                 ((= n 2) (begin
                            (set! balance (string->number line))
                            (set! database (append database (list (make-account name password balance))))
-                           (helper (read-line input-file) 0))))))
-    (helper (read-line input-file) 0)))
+                           (helper (read-line input-file (or 'linefeed 'return)) 0))))))
+    (helper (read-line input-file (or 'linefeed 'return)) 0)))
 
 (read-accounts ip)
 
