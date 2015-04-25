@@ -55,11 +55,11 @@
 (define (create-account username password)
   ; Predicate to pass to filter
   (let ((pass (vigenere-cipher password "dankmemes" 'encrypt)))
-  (define (equal-username? acc)
-    (equal? (acc 'get-username) username))
-  (if (equal? (filter equal-username? database) nil)
-      (set! database (append database (list (make-account username pass 0))))
-      (gui-error "An account with that name already exists"))))
+    (define (equal-username? acc)
+      (equal? (acc 'get-username) username))
+    (if (equal? (filter equal-username? database) nil)
+        (set! database (append database (list (make-account username pass 0))))
+        (gui-error "An account with that name already exists"))))
 
 ; Constructor for the object
 (define (make-account username password balance)
@@ -76,8 +76,6 @@
           (gui-error-overflow))
         (set! balance (+ balance amount)))
     balance)
-  (define (encrypt-password pass)
-    (set! password (vigenere-cipher pass "dankmemes" 'encrypt)))
   ; Accessor to member methods
   (define (dispatch m)
     (cond ((eq? m 'get-username) username)
@@ -87,7 +85,6 @@
           ((eq? m 'deposit) deposit)
           (else (gui-error "Unknown request -- MAKE-ACCOUNT"
                        m))))
-    (encrypt-password password)
     dispatch)
 
 ; Reads a text file of accounts and puts them into the database
@@ -102,15 +99,15 @@
           "Input Read"
           (cond ((= n 0) (begin
                            (set! name line)
-                           (helper (read-line input-file (or 'linefeed 'return)) 1)))
+                           (helper (read-line input-file 'any-one) 1)))
                 ((= n 1) (begin
                            (set! password line)
-                           (helper (read-line input-file (or 'linefeed 'return)) 2)))
+                           (helper (read-line input-file 'any-one) 2)))
                 ((= n 2) (begin
                            (set! balance (string->number line))
                            (set! database (append database (list (make-account name password balance))))
-                           (helper (read-line input-file (or 'linefeed 'return)) 0))))))
-    (helper (read-line input-file (or 'linefeed 'return)) 0)))
+                           (helper (read-line input-file 'any-one) 0))))))
+    (helper (read-line input-file 'any-one) 0)))
 
 (read-accounts ip)
 
