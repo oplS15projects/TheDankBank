@@ -54,11 +54,12 @@
 ; procedure to database
 (define (create-account username password)
   ; Predicate to pass to filter
+  (let ((pass (vigenere-cipher password "dankmemes" 'encrypt)))
   (define (equal-username? acc)
     (equal? (acc 'get-username) username))
   (if (equal? (filter equal-username? database) nil)
-      (set! database (append database (list (make-account username password 0))))
-      (gui-error "An account with that name already exists")))
+      (set! database (append database (list (make-account username pass 0))))
+      (gui-error "An account with that name already exists"))))
 
 ; Constructor for the object
 (define (make-account username password balance)
@@ -89,6 +90,28 @@
     (encrypt-password password)
     dispatch)
 
-(set! database (append database (list (make-account "fredm" "ilovescheme" 99999))))
+; Reads a text file of accounts and puts them into the database
+(define ip (open-input-file "accounts.txt"))
+
+(define (read-accounts input-file)
+  (let ((name "")
+        (password "")
+        (balance 0))
+    (define (helper line n)
+      (if (eof-object? line)
+          "Input Read"
+          (cond ((= n 0) (begin
+                           (set! name line)
+                           (helper (read-line input-file) 1)))
+                ((= n 1) (begin
+                           (set! password line)
+                           (helper (read-line input-file) 2)))
+                ((= n 2) (begin
+                           (set! balance (string->number line))
+                           (set! database (append database (list (make-account name password balance))))
+                           (helper (read-line input-file) 0))))))
+    (helper (read-line input-file) 0)))
+
+(read-accounts ip)
 
 (provide (all-defined-out))
