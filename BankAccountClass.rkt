@@ -4,7 +4,7 @@
          racket/gui
          db)
 
-; Definition for nil because fuck you
+; Definition for nil
 (define nil '())
 
 ; Database of all of the bank accounts
@@ -90,9 +90,11 @@
     dispatch)
 
 ; Database scheme
+; Define database connection and create table of accounts.
 (define dbc (sqlite3-connect #:database "bank.db" #:mode 'create))
 (query-exec dbc "CREATE TABLE IF NOT EXISTS accounts(login TEXT PRIMARY KEY, password TEXT, amount INTEGER)")
 
+; Breaks down properties of account and insert/replace entry into database. Used to add/update accounts.
 (define (insert-to-db account)
   (let ((username (account 'get-username))
         (password (account 'get-password))
@@ -103,6 +105,7 @@
                 password 
                 balance)))
 
+; Load accounts from database into memory.
 (define (load-from-db)
   (let ((get-username (lambda (row) (vector-ref row 0)))
         (get-password (lambda (row) (vector-ref row 1)))
