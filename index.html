@@ -74,7 +74,7 @@
 <a id="favorite-lines-of-code" class="anchor" href="#favorite-lines-of-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Favorite Lines of Code</h2>
 
 <h4>
-<a id="matt-a-team-member" class="anchor" href="#matt-a-team-member" aria-hidden="true"><span class="octicon octicon-link"></span></a>Matt (a team member)</h4>
+<a id="matt-mattwollf" class="anchor" href="#matt-mattwollf" aria-hidden="true"><span class="octicon octicon-link"></span></a>Matt (<a href="https://github.com/mattwollf" class="user-mention">@mattwollf</a>)</h4>
 
 <p>My favorite lines of code are the Vigenere cipher text generating function. The keylist defined generates a keylist from the keyword which matches the length of the password. The function body uses <code>map</code> and <code>foldr</code> to apply the vigenere cipher to concisely apply the vigenere cipher with the keylist to the password, and convert the resulting cipher text back to a string.</p>
 
@@ -85,21 +85,31 @@
   (<span class="pl-c1">list-&gt;string</span> (<span class="pl-c1">map</span> chr (foldr folder-proc <span class="pl-c1">'()</span> (<span class="pl-c1">map</span> ord (<span class="pl-c1">string-&gt;list</span> password)) keylist))))</pre></div>
 
 <h4>
-<a id="tyler" class="anchor" href="#tyler" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tyler</h4>
+<a id="tyler-tyalt1" class="anchor" href="#tyler-tyalt1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tyler (<a href="https://github.com/tyalt1" class="user-mention">@tyalt1</a>)</h4>
 
-<p>Favorite line of code was naming the main window "dank memes since 1993."</p>
+<p>My favorite lines of code are the function that inserts into the database. It takes an account and extracts its username, password, and account, then adds it to the database. The way the SQL query is written, the function can be used to add a new account and change an exsisting account. </p>
+
+<div class="highlight highlight-scheme"><pre>(<span class="pl-k">define</span> (<span class="pl-en">insert-to-db</span><span class="pl-smi"> account</span>)
+  (<span class="pl-k">let</span> ((username (account <span class="pl-c1">'get-username</span>))
+        (password (account <span class="pl-c1">'get-password</span>))
+        (balance  (account <span class="pl-c1">'get-balance</span>)))
+    (query-exec dbc 
+                <span class="pl-s"><span class="pl-pds">"</span>REPLACE INTO accounts(login, password, amount) VALUES ($1, $2, $3)<span class="pl-pds">"</span></span>
+                username 
+                password 
+                balance)))</pre></div>
 
 <h4>
-<a id="mike" class="anchor" href="#mike" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mike</h4>
+<a id="mike-movery" class="anchor" href="#mike-movery" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mike (<a href="https://github.com/movery" class="user-mention">@movery</a>)</h4>
 
-<p>Favorite line of code was when we print "you dropped your lambdas!" on overflow</p>
+<p>"It's just so simple" - Confucius 2015</p>
+
+<div class="highlight highlight-scheme"><pre>(<span class="pl-k">define</span> <span class="pl-smi">nil</span> '())</pre></div>
 
 <h1>
 <a id="how-to-download-and-run" class="anchor" href="#how-to-download-and-run" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to Download and Run</h1>
 
-<p><a href="https://github.com/oplS15projects/TheDankBank/tree/v0.2">Download v.02 release here</a></p>
-
-<p>clone the repo, open BankClient.rkt in Dr. Racket and run.</p>
+<p>Open BankClient.rkt in DrRacket and run.</p>
       </section>
     </div>
 
