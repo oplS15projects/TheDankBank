@@ -10,8 +10,8 @@ Matt Wolf
 The Dank Bank: A banking application using cryptography to store your precious memes and lambdas
 
 ##Screenshots
-![screenshot of the main window](LoggedInMainWindow.PNG)
-!![the create account window](CreateAccount.PNG)
+![screenshot of the main window](ScreenShots/LoggedInMainWindow.PNG)
+![the create account window](ScreenShots/CreateAccount.PNG)
 
 ##Concepts Demonstrated
 Identify the OPL concepts demonstrated in your project. Be brief. A simple list and example is sufficient. 
