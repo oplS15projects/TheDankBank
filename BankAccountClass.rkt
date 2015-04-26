@@ -1,7 +1,8 @@
 #lang racket
 
 (require "Ciphers.rkt"
-         racket/gui)
+         racket/gui
+         db)
 
 ; Definition for nil because fuck you
 (define nil '())
@@ -54,11 +55,13 @@
 ; procedure to database
 (define (create-account username password)
   ; Predicate to pass to filter
-  (let ((pass (vigenere-cipher password "dankmemes" 'encrypt)))
+  (let* ((pass (vigenere-cipher password "dankmemes" 'encrypt))
+         (new-account (make-account username pass 0)))
     (define (equal-username? acc)
       (equal? (acc 'get-username) username))
     (if (equal? (filter equal-username? database) nil)
-        (set! database (append database (list (make-account username pass 0))))
+        (begin (set! database (append database (list new-account)))
+               (insert-to-db new-account))
         (gui-error "An account with that name already exists"))))
 
 ; Constructor for the object
@@ -83,32 +86,31 @@
           ((eq? m 'get-balance) balance)
           ((eq? m 'withdraw) withdraw)
           ((eq? m 'deposit) deposit)
-          (else (gui-error "Unknown request -- MAKE-ACCOUNT"
-                       m))))
+          (else (error "Unknown request -- MAKE-ACCOUNT" m))))
     dispatch)
 
-; Reads a text file of accounts and puts them into the database
-(define ip (open-input-file "accounts.txt"))
+; Database scheme
+(define dbc (sqlite3-connect #:database "bank.db" #:mode 'create))
+(query-exec dbc "CREATE TABLE IF NOT EXISTS accounts(login TEXT PRIMARY KEY, password TEXT, amount INTEGER)")
 
-(define (read-accounts input-file)
-  (let ((name "")
-        (password "")
-        (balance 0))
-    (define (helper line n)
-      (if (eof-object? line)
-          "Input Read"
-          (cond ((= n 0) (begin
-                           (set! name line)
-                           (helper (read-line input-file 'any-one) 1)))
-                ((= n 1) (begin
-                           (set! password line)
-                           (helper (read-line input-file 'any-one) 2)))
-                ((= n 2) (begin
-                           (set! balance (string->number line))
-                           (set! database (append database (list (make-account name password balance))))
-                           (helper (read-line input-file 'any-one) 0))))))
-    (helper (read-line input-file 'any-one) 0)))
+(define (insert-to-db account)
+  (let ((username (account 'get-username))
+        (password (account 'get-password))
+        (balance  (account 'get-balance)))
+    (query-exec dbc 
+                "REPLACE INTO accounts(login, password, amount) VALUES ($1, $2, $3)"
+                username 
+                password 
+                balance)))
 
-(read-accounts ip)
+(define (load-from-db)
+  (let ((get-username (lambda (row) (vector-ref row 0)))
+        (get-password (lambda (row) (vector-ref row 1)))
+        (get-amount   (lambda (row) (vector-ref row 2))))
+    (for ([i (query-rows dbc "SELECT * FROM accounts")])
+      (set! database (append database (list (make-account (get-username i)
+                                                          (get-password i)
+                                                          (get-amount   i))))))))
+(load-from-db)
 
 (provide (all-defined-out))
