@@ -7,7 +7,8 @@
 (define (chr num)
   (integer->char num))
 
-; Methods for the Vigenere Cipher
+; Called by gen-v-key to lengthen or shorten a string to a size 'len',
+; cycling back to the start of the string when the end is reached
 (define (cycle in len)
   (define lst (cond ((list? in) in)
                     ((string? in) (string->list in))
@@ -18,6 +19,8 @@
           (else (cyc (cons (car src) dst) (cdr src)))))
   (reverse (cyc null lst)))
 
+; Returns a list of numbers based on the key-word to be used as off-set values in
+; the shift function when encrypting a password.
 (define (gen-v-key password-len key)
   (map (lambda (x) (if (> x 96) 
                        (- x 96)
@@ -54,6 +57,10 @@
             (else (error "Unknown Method: Try 'encrypt or 'decrypt")))
       (error "Value of K is not between 0 and 26 (inclusive)")))
   
+;;; Vigenere-Cipher
+;;; Parameters: String
+;;;             String (Characters only)
+;;;             Symbol ('encrypt or 'decrypt)
 
 (define (vigenere-cipher password keyword method)
   (define (folder-proc a b result)

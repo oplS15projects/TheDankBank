@@ -7,7 +7,10 @@
 ; Definition for nil because fuck you
 (define nil '())
 
-;GUI Error printing
+; Database of all of the bank accounts
+(define database nil)
+
+; GUI Error - Pop-up displaying type of error
 (define (gui-error err-string)
   (let* ((err-window  (new frame%   [label "Error"]))
          (err-message (new message% [label err-string]
@@ -18,6 +21,7 @@
     (begin (send err-window show #t)
            (error err-string))))
 
+; GUI Error - Pop-up displaying memes
 (define (gui-error-overflow)
   (let* ((err-window  (new frame%   [label "Error"]))
          (err-message (new message% [label "You dropped your lambdas!"]
@@ -29,13 +33,11 @@
                                     [callback (lambda (b e) (send err-window show #f))])))
     (send err-window show #t)))
 
-; Database of all of the bank accounts
-(define database nil)
-
 ; Called from Deposit button
 (define (deposit-account account amount)
   ((account 'deposit) (string->number amount))) 
 
+; Called from Withdraw button
 (define (withdraw-account account amount)
   ((account 'withdraw) (string->number amount)))
 
@@ -51,10 +53,8 @@
         (gui-error "No account with that username exists"))))
 
 ; Called from Create-Account button.
-; Calls make-account and adds the return
-; procedure to database
+; Calls make-account and adds the return procedure to the database
 (define (create-account username password)
-  ; Predicate to pass to filter
   (let* ((pass (vigenere-cipher password "dankmemes" 'encrypt))
          (new-account (make-account username pass 0)))
     (define (equal-username? acc)
@@ -79,7 +79,7 @@
           (gui-error-overflow))
         (set! balance (+ balance amount)))
     balance)
-  ; Accessor to member methods
+  ; Accessor to methods
   (define (dispatch m)
     (cond ((eq? m 'get-username) username)
           ((eq? m 'get-password) password)
