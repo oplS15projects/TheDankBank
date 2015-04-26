@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>TheDankBank by oplS15projects</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>TheDankBank</h1>
+        <h2>Code for banking client project for OPL.</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/oplS15projects/TheDankBank/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/oplS15projects/TheDankBank/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/oplS15projects/TheDankBank" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h2>
+<a id="authors" class="anchor" href="#authors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors</h2>
+
+<p>Tyler Alterio</p>
+
+<p>Mike Overy</p>
+
+<p>Matt Wolf</p>
+
+<h2>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<p>The Dank Bank: A banking application using cryptography to store your precious memes and lambdas</p>
+
+<h2>
+<a id="screenshots" class="anchor" href="#screenshots" aria-hidden="true"><span class="octicon octicon-link"></span></a>Screenshots</h2>
+
+<p><img src="ScreenShots/LoggedInMainWindow.PNG" alt="screenshot of the main window">
+<img src="ScreenShots/CreateAccount.PNG" alt="the create account window"></p>
+
+<h2>
+<a id="concepts-demonstrated" class="anchor" href="#concepts-demonstrated" aria-hidden="true"><span class="octicon octicon-link"></span></a>Concepts Demonstrated</h2>
+
+<p>Identify the OPL concepts demonstrated in your project. Be brief. A simple list and example is sufficient. </p>
+
+<ul>
+<li>
+<strong>Object Oriented Programming</strong> was used to implement the bank account class which holds user info and account balance, and provides ways of withdrawing and depositing money.</li>
+<li>Password ciphertext is computed using ascii characters stored in <strong>recursive data structures</strong>
+</li>
+</ul>
+
+<h2>
+<a id="external-technology-and-libraries" class="anchor" href="#external-technology-and-libraries" aria-hidden="true"><span class="octicon octicon-link"></span></a>External Technology and Libraries</h2>
+
+<ul>
+<li>We used the racket <strong>GUI library</strong> to create the GUI for the application.</li>
+<li>A <strong>SQL database</strong> is used to store each user's info persistently</li>
+<li>
+<strong>Ascii character encoding</strong> manipulation was used for password processing</li>
+</ul>
+
+<h2>
+<a id="favorite-lines-of-code" class="anchor" href="#favorite-lines-of-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Favorite Lines of Code</h2>
+
+<h4>
+<a id="matt-a-team-member" class="anchor" href="#matt-a-team-member" aria-hidden="true"><span class="octicon octicon-link"></span></a>Matt (a team member)</h4>
+
+<p>My favorite lines of code are the Vigenere cipher text generating function. The keylist defined generates a keylist from the keyword which matches the length of the password. The function body uses <code>map</code> and <code>foldr</code> to apply the vigenere cipher to concisely apply the vigenere cipher with the keylist to the password, and convert the resulting cipher text back to a string.</p>
+
+<div class="highlight highlight-scheme"><pre>(<span class="pl-k">define</span> (<span class="pl-en">vigenere-cipher</span><span class="pl-smi"> password keyword method</span>)
+  (<span class="pl-k">define</span> (<span class="pl-en">folder-proc</span><span class="pl-smi"> a b result</span>)
+    (<span class="pl-c1">cons</span> (shift a b method) result))
+  (<span class="pl-k">define</span> <span class="pl-smi">keylist</span> (gen-v-key (string-length password) keyword))
+  (<span class="pl-c1">list-&gt;string</span> (<span class="pl-c1">map</span> chr (foldr folder-proc <span class="pl-c1">'()</span> (<span class="pl-c1">map</span> ord (<span class="pl-c1">string-&gt;list</span> password)) keylist))))</pre></div>
+
+<h4>
+<a id="tyler" class="anchor" href="#tyler" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tyler</h4>
+
+<p>Favorite line of code was naming the main window "dank memes since 1993."</p>
+
+<h4>
+<a id="mike" class="anchor" href="#mike" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mike</h4>
+
+<p>Favorite line of code was when we print "you dropped your lambdas!" on overflow</p>
+
+<h1>
+<a id="how-to-download-and-run" class="anchor" href="#how-to-download-and-run" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to Download and Run</h1>
+
+<p><a href="https://github.com/oplS15projects/TheDankBank/tree/v0.2">Download v.02 release here</a></p>
+
+<p>clone the repo, open BankClient.rkt in Dr. Racket and run.</p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
