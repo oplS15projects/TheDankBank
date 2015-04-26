@@ -24,7 +24,7 @@ Identify the OPL concepts demonstrated in your project. Be brief. A simple list 
 * **Ascii character encoding** manipulation was used for password processing
 
 ##Favorite Lines of Code
-####Matt (a team member)
+####Matt (@mattwollf)
 My favorite lines of code are the Vigenere cipher text generating function. The keylist defined generates a keylist from the keyword which matches the length of the password. The function body uses `map` and `foldr` to apply the vigenere cipher to concisely apply the vigenere cipher with the keylist to the password, and convert the resulting cipher text back to a string.
 ```scheme
 (define (vigenere-cipher password keyword method)
@@ -33,7 +33,7 @@ My favorite lines of code are the Vigenere cipher text generating function. The 
   (define keylist (gen-v-key (string-length password) keyword))
   (list->string (map chr (foldr folder-proc '() (map ord (string->list password)) keylist))))
 ```
-####Tyler 
+####Tyler (@tyalt1)
 My favorite lines of code are the function that inserts into the database. It takes an account and extracts its username, password, and account, then adds it to the database. The way the SQL query is written, the function can be used to add a new account and change an exsisting account. 
 
 ```scheme
@@ -47,7 +47,7 @@ My favorite lines of code are the function that inserts into the database. It ta
                 password 
                 balance)))
 ```
-####Mike
+####Mike (@movery)
 "It's just so simple" - Confucius 2015
 ```scheme
 (define nil '())
