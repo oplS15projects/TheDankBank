@@ -34,15 +34,26 @@ My favorite lines of code are the Vigenere cipher text generating function. The 
   (list->string (map chr (foldr folder-proc '() (map ord (string->list password)) keylist))))
 ```
 ####Tyler 
+My favorite lines of code are the function that inserts into the database. It takes an account and extracts its username, password, and account, then adds it to the database. The way the SQL query is written, the function can be used to add a new account and change an exsisting account. 
 
-Favorite line of code was naming the main window "dank memes since 1993."
-
+```scheme
+(define (insert-to-db account)
+  (let ((username (account 'get-username))
+        (password (account 'get-password))
+        (balance  (account 'get-balance)))
+    (query-exec dbc 
+                "REPLACE INTO accounts(login, password, amount) VALUES ($1, $2, $3)"
+                username 
+                password 
+                balance)))
+```
 ####Mike
-
-Favorite line of code was when we print "you dropped your lambdas!" on overflow
+"It's just so simple" - Confucius 2015
+```scheme
+(define nil '())
+```
 
 #How to Download and Run
-[Download v.02 release here](https://github.com/oplS15projects/TheDankBank/tree/v0.2)
 
-clone the repo, open BankClient.rkt in Dr. Racket and run.
+Open BankClient.rkt in DrRacket and run.
 
