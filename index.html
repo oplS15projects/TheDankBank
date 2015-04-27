@@ -51,8 +51,6 @@
 <h2>
 <a id="concepts-demonstrated" class="anchor" href="#concepts-demonstrated" aria-hidden="true"><span class="octicon octicon-link"></span></a>Concepts Demonstrated</h2>
 
-<p>Identify the OPL concepts demonstrated in your project. Be brief. A simple list and example is sufficient. </p>
-
 <ul>
 <li>
 <strong>Object Oriented Programming</strong> was used to implement the bank account class which holds user info and account balance, and provides ways of withdrawing and depositing money.</li>
@@ -76,7 +74,7 @@
 <h4>
 <a id="matt-mattwollf" class="anchor" href="#matt-mattwollf" aria-hidden="true"><span class="octicon octicon-link"></span></a>Matt (<a href="https://github.com/mattwollf" class="user-mention">@mattwollf</a>)</h4>
 
-<p>My favorite lines of code are the Vigenere cipher text generating function. The keylist defined generates a keylist from the keyword which matches the length of the password. The function body uses <code>map</code> and <code>foldr</code> to apply the vigenere cipher to concisely apply the vigenere cipher with the keylist to the password, and convert the resulting cipher text back to a string.</p>
+<p>My favorite lines of code are the Vigenere cipher text generating function. The keylist defined generates a keylist from the keyword which matches the length of the password. The function body uses <code>map</code> and <code>foldr</code> to concisely apply the vigenere cipher with the keylist to the password, and convert the resulting cipher text back to a string.</p>
 
 <div class="highlight highlight-scheme"><pre>(<span class="pl-k">define</span> (<span class="pl-en">vigenere-cipher</span><span class="pl-smi"> password keyword method</span>)
   (<span class="pl-k">define</span> (<span class="pl-en">folder-proc</span><span class="pl-smi"> a b result</span>)
@@ -87,7 +85,7 @@
 <h4>
 <a id="tyler-tyalt1" class="anchor" href="#tyler-tyalt1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tyler (<a href="https://github.com/tyalt1" class="user-mention">@tyalt1</a>)</h4>
 
-<p>My favorite lines of code are the function that inserts into the database. It takes an account and extracts its username, password, and account, then adds it to the database. The way the SQL query is written, the function can be used to add a new account and change an exsisting account. </p>
+<p>My favorite lines of code are the function that inserts into the database. It takes an account and adds its username, password, and account, into the database. The way the SQL query is written, the function can be used to add a new account and change an existing account.</p>
 
 <div class="highlight highlight-scheme"><pre>(<span class="pl-k">define</span> (<span class="pl-en">insert-to-db</span><span class="pl-smi"> account</span>)
   (<span class="pl-k">let</span> ((username (account <span class="pl-c1">'get-username</span>))
@@ -110,6 +108,8 @@
 <a id="how-to-download-and-run" class="anchor" href="#how-to-download-and-run" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to Download and Run</h1>
 
 <p>Open BankClient.rkt in DrRacket and run.</p>
+
+<p><a href="https://opls15projects.github.io/TheDankBank/">Website on Github Pages</a></p>
       </section>
     </div>
 
