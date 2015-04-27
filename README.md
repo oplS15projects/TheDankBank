@@ -14,7 +14,7 @@ The Dank Bank: A banking application using cryptography to store your precious m
 ![the create account window](ScreenShots/CreateAccount.PNG)
 
 ##Concepts Demonstrated
-Identify the OPL concepts demonstrated in your project. Be brief. A simple list and example is sufficient. 
+
 * **Object Oriented Programming** was used to implement the bank account class which holds user info and account balance, and provides ways of withdrawing and depositing money.
 * Password ciphertext is computed using ascii characters stored in **recursive data structures**
 
@@ -25,7 +25,7 @@ Identify the OPL concepts demonstrated in your project. Be brief. A simple list 
 
 ##Favorite Lines of Code
 ####Matt (@mattwollf)
-My favorite lines of code are the Vigenere cipher text generating function. The keylist defined generates a keylist from the keyword which matches the length of the password. The function body uses `map` and `foldr` to apply the vigenere cipher to concisely apply the vigenere cipher with the keylist to the password, and convert the resulting cipher text back to a string.
+My favorite lines of code are the Vigenere cipher text generating function. The keylist defined generates a keylist from the keyword which matches the length of the password. The function body uses `map` and `foldr` to concisely apply the vigenere cipher with the keylist to the password, and convert the resulting cipher text back to a string.
 ```scheme
 (define (vigenere-cipher password keyword method)
   (define (folder-proc a b result)
@@ -34,8 +34,7 @@ My favorite lines of code are the Vigenere cipher text generating function. The 
   (list->string (map chr (foldr folder-proc '() (map ord (string->list password)) keylist))))
 ```
 ####Tyler (@tyalt1)
-My favorite lines of code are the function that inserts into the database. It takes an account and extracts its username, password, and account, then adds it to the database. The way the SQL query is written, the function can be used to add a new account and change an exsisting account. 
-
+My favorite lines of code are the function that inserts into the database. It takes an account and adds its username, password, and account, into the database. The way the SQL query is written, the function can be used to add a new account and change an existing account.
 ```scheme
 (define (insert-to-db account)
   (let ((username (account 'get-username))
